@@ -1,4 +1,4 @@
-from os
+import os
 from discord import Client
 from discord.ext.commands import Bot
 from config import discord_key, owners_ids
