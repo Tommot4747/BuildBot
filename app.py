@@ -1,14 +1,14 @@
 import os
 from discord import Client
 from discord.ext.commands import Bot
-from config import discord_key, owners_ids
+# from config import discord_key, owners_ids
 
-# discord_key = os.environ.get('discord_key')
-# build_bot = Bot(command_prefix=command_prefix)
+discord_key = os.environ.get('discord_key')
+build_bot = Bot(command_prefix=command_prefix)
 
 command_prefix = '/bb '
 
-build_bot = Bot(command_prefix=command_prefix, owner_ids=list(owners_ids.values()))
+# build_bot = Bot(command_prefix=command_prefix, owner_ids=list(owners_ids.values()))
 
 
 @build_bot.event
