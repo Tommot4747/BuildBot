@@ -1,7 +1,8 @@
 from discord import Client
 from discord.ext.commands import Bot
-from config import discord_key
+# from config import discord_key
 
+discord_key = os.environ.get('discord_key')
 
 owners_ids = {'Beau' : 644935055537340416, 'Zach' : 166280125157998593,
          'Alicia' : 108416058330746880,  'Tom' : 113844947592937477}
