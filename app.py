@@ -62,8 +62,9 @@ async def build(ctx, *, champion):
     clean_champ = str(champion).lower().replace(' ', '')
     if clean_champ in champ_list_lower:
         champ_name = champ_json['data'][champ_lookup[clean_champ]]['name']
-        mobi_build = mobi_build_lookup(mobi_champ_links_dict[champ_name])
-        await ctx.send(f"**Mobifire Build**: <{mobi_build}>")
+        mobi_build_one, mobi_build_two, mobi_build_three = mobi_build_lookup(mobi_champ_links_dict[champ_name])
+        await ctx.send(f"**Mobifire Builds** (in order of patch and upvotes)\n\
+        **1.**<{mobi_build_one}> \n **2.**<{mobi_build_two}> \n **3.**<{mobi_build_three}> ")
     else:
         suggestion_list = list(filter(lambda x: x[0].lower() == clean_champ[0], champ_list))
         suggestion = ', '.join(suggestion_list)

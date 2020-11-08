@@ -48,8 +48,10 @@ def mobi_build_lookup(champ_link):
     html_doc = requests.get(f'{champ_link}?sort=patch&order=ascending&author=all&page=1').text
     soup = BeautifulSoup(html_doc, 'html.parser')
     a_tags = soup.find_all('a', class_ = re.compile('browse-list'))
-    full_link = 'https://www.mobafire.com' + a_tags[0]['href']
-    return full_link
+    first_link = 'https://www.mobafire.com' + a_tags[0]['href']
+    second_link = 'https://www.mobafire.com' + a_tags[1]['href']
+    third_link = 'https://www.mobafire.com' + a_tags[2]['href']
+    return first_link, second_link, third_link
 
 def counter_champ_links():
     url = 'https://www.counterstats.net'
