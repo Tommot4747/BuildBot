@@ -44,8 +44,14 @@ async def stats(ctx, *, champion):
         champ_detail_json = requests.get(f'http://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion/{champ_id}.json').json()
         stat_list, stat_df = stat_table(champ_json, champ_id)
         win_stats_dict = mobi_stats_lookup(mobi_champ_links_dict[champ_name])
-
-        await ctx.send(f"{stats_message(champ_name, champ_id, champ_detail_json, win_stats_dict)}")
+        ally = ', '.join(champ_detail_json['data'][champ_id]['allytips'])
+        enemy = ', '.join(champ_detail_json['data'][champ_id]['enemytips'])
+        
+        embed=discord.Embed(title=f"{champ_name} Information", description=f"**Ally Tips**: {ally} \n **Enemy Tips**: {enemy}", color=0x0C223E)
+        embed.add_field(name="Win Rate", value=f"{win_stats_dict['win']}", inline=True)
+        embed.add_field(name="Ban Rate", value=f"{win_stats_dict['ban']}", inline=True)
+        embed.add_field(name="Pick Rate", value=f"{win_stats_dict['pick']}", inline=True)
+        await ctx.send(embed=embed)
         await ctx.send(f"```{stat_df[['Stat', '1', '2', '3', '4', '5', '6', '7', '8', '9']].to_string(index=False)}```")
         await ctx.send(f"```{stat_df[['Stat', '10', '11', '12', '13', '14', '15', '16', '17', '18']].to_string(index=False)}```")
 
@@ -57,14 +63,19 @@ async def stats(ctx, *, champion):
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
 
+
 @build_bot.command()
 async def build(ctx, *, champion):
     clean_champ = str(champion).lower().replace(' ', '')
     if clean_champ in champ_list_lower:
         champ_name = champ_json['data'][champ_lookup[clean_champ]]['name']
         mobi_build_one, mobi_build_two, mobi_build_three = mobi_build_lookup(mobi_champ_links_dict[champ_name])
-        await ctx.send(f"**Mobifire Builds** (in order of patch and upvotes)\n\
-        **1.**<{mobi_build_one}> \n **2.**<{mobi_build_two}> \n **3.**<{mobi_build_three}> ")
+        embed=discord.Embed(title=f"Buildbot - {champ_name} Guide", url=f"{mobi_champ_links_dict[champ_name]}", color=0x0C223E)
+        # embed.set_thumbnail(url=f"https://www.mobafire.com/images/champion/square/{clean_champ}.png")
+        embed.add_field(name="**1.**", value=f"{mobi_build_one}", inline=False)
+        embed.add_field(name="**2.**", value=f"{mobi_build_two}", inline=False)
+        embed.add_field(name="**3.**", value=f"{mobi_build_three}", inline=False)
+        await ctx.send(embed=embed)
     else:
         suggestion_list = list(filter(lambda x: x[0].lower() == clean_champ[0], champ_list))
         suggestion = ', '.join(suggestion_list)
@@ -72,6 +83,7 @@ async def build(ctx, *, champion):
             await ctx.send(f'We cannot find anything close to {champion}.')
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
+
 
 @build_bot.command()
 async def counter(ctx, *, champion):
@@ -98,8 +110,6 @@ async def counter(ctx, *, champion):
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
 
-
-
 # @build_bot.command()
 # async def displayembed(ctx):
 #     embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
@@ -122,8 +132,8 @@ async def info(ctx):
     embed = discord.Embed(title = "Buildbot - Guide", description = "BuildBot is a bot made with the intent to help League of Legends players enhance their ranked experience", color = 0x0C223E)
     # embed.set_image(url='data\Build_Bot_White.png') ## waiting for git post
     embed.add_field(name = 'Build Links', value = '\n "!bb build [champ]" Provides the best builds for that champion as per our algorithm.', inline=False),
-    embed.add_field(name = 'Build Links', value = '\n "!bb counter [champ]" Provides best and worst picks against given champion.', inline=False),
-    embed.add_field(name = 'Build Links', value = '\n "!bb stats [champ]" Provides statistics about a given character for anyone who might require them.', inline=False),
+    embed.add_field(name = 'Counters', value = '\n "!bb counter [champ]" Provides best and worst picks against given champion.', inline=False),
+    embed.add_field(name = 'Statistics', value = '\n "!bb stats [champ]" Provides statistics about a given character for anyone who might require them.', inline=False),
     embed.set_footer(text='https://github.com/beaubatchelor/BuildBot')
 
     await ctx.send(embed = embed)
