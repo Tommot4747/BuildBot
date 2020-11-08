@@ -6,17 +6,17 @@ import requests
 import discord
 from discord import Client
 from discord.ext.commands import Bot
-from config import discord_key, owners_ids ## Test
+# from config import discord_key, owners_ids ## Test
 from functions.functions import (stat_table, mobi_champ_links, counter_message, stats_message,
                                  mobi_build_lookup, counter_champ_links, counter_champ_lookup,
                                  mobi_stats_lookup)
 
-# discord_key = os.environ.get('discord_key') ## Prod
+discord_key = os.environ.get('discord_key') ## Prod
 command_prefix = '!bb '
 
-# build_bot = Bot(command_prefix=command_prefix) ## Prod
-build_bot = Bot(command_prefix=command_prefix,
-                 owner_ids=list(owners_ids.values())) ## Test
+build_bot = Bot(command_prefix=command_prefix) ## Prod
+# build_bot = Bot(command_prefix=command_prefix,
+#                  owner_ids=list(owners_ids.values())) ## Test
 
 
 ## Connection to the Champion API
