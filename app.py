@@ -79,7 +79,17 @@ async def counter(ctx, *, champion):
     if clean_champ in champ_list_lower:
         champ_name = champ_json['data'][champ_lookup[clean_champ]]['name']
         counter_champ_dict = counter_champ_lookup(counter_champ_links_dict[champ_name])
-        await ctx.send(counter_message(champ_name, counter_champ_dict))
+        best_list = counter_champ_dict['best']
+        worst_list = counter_champ_dict['worst']
+        embed=discord.Embed(title=f"Counter Picks for {champ_name}", url=f"{counter_champ_links_dict[champ_name]}", color=0x0C223E)
+        embed.set_author(name="Build Bot", url="https://github.com/beaubatchelor/BuildBot/", icon_url="https://cdn.discordapp.com/attachments/774459422113267723/774725899270225950/Build_Bot_White.png")
+        embed.add_field(name="#1 Best Picks Against", value=f"{best_list[0]['name']} {best_list[0]['percent']}", inline=True)
+        embed.add_field(name="#2 Best Picks Against", value=f"{best_list[1]['name']} {best_list[1]['percent']}", inline=True)
+        embed.add_field(name="#3 Best Picks Against", value=f"{best_list[2]['name']} {best_list[2]['percent']}", inline=True)
+        embed.add_field(name="#1 Worst Picks Against", value=f"{worst_list[0]['name']} {worst_list[0]['percent']}", inline=True)
+        embed.add_field(name="#2 Worst Picks Against", value=f"{worst_list[1]['name']} {worst_list[1]['percent']}", inline=True)
+        embed.add_field(name="#3 Worst Picks Against", value=f"{worst_list[2]['name']} {worst_list[2]['percent']}", inline=True)
+        await ctx.send(embed=embed)
     else:
         suggestion_list = list(filter(lambda x: x[0].lower() == clean_champ[0], champ_list))
         suggestion = ', '.join(suggestion_list)
@@ -87,6 +97,8 @@ async def counter(ctx, *, champion):
             await ctx.send(f'We cannot find anything close to {champion}.')
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
+
+
 
 # @build_bot.command()
 # async def displayembed(ctx):
