@@ -79,7 +79,7 @@ def counter_champ_lookup(champ_link):
                 img_ele = counter.find('img')
                 img = img_ele['src']
                 name = img_ele['alt'].split('for ')[-1].strip()
-                percent = counter.find('span', class_ = 'percentage').text
+                percent = counter.find('span', class_ = 'percentage').text.strip()
 
                 counter_dict['name'] = name
                 counter_dict['img'] = img
@@ -95,13 +95,14 @@ def counter_champ_lookup(champ_link):
                 img_ele = counter.find('img')
                 img = img_ele['src']
                 name = img_ele['alt'].split('for ')[-1].strip()
-                percent = counter.find('span', class_ = 'percentage').text
+                percent = counter.find('span', class_ = 'percentage').text.strip()
 
                 counter_dict['name'] = name
                 counter_dict['img'] = img
                 counter_dict['percent'] = percent
 
                 counterers_dict['worst'].append(counter_dict)
+    print(counterers_dict)
     return counterers_dict
 
 def counter_message(champ_name, counter_champ_dict):
