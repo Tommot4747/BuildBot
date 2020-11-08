@@ -104,7 +104,6 @@ def counter_champ_lookup(champ_link):
                 counter_dict['percent'] = percent
 
                 counterers_dict['worst'].append(counter_dict)
-    print(counterers_dict)
     return counterers_dict
 
 def counter_message(champ_name, counter_champ_dict):
