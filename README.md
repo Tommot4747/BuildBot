@@ -25,7 +25,8 @@ Buildbot is a ...
 | :--- | :--- | --- |
 | **acronym** | /bb | Acronym for the bot, use before command. |
 | **build** | /bb build <championName> | Provides the best build for that champion as per our algorithm. |
-| **stat** | /bb stat <championName> | Provides important statistics like w/l, pickrate, etc.. |
+| **stats** | /bb stats <championName> | Provides important statistics like w/l, pickrate, etc.. |
+| **counter** | /bb counter <championName> | Provides best and worst picks against <championName> |
 | **liquipedia** | tba | tba |
 
 
