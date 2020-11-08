@@ -8,7 +8,6 @@ from discord.ext.commands import Bot
 from functions.functions import stat_table, mobi_champ_links, mobi_build_lookup
 
 discord_key = os.environ.get('discord_key') ## Prod
-discord_key = 'Nzc0MTUxOTgwMTU5MjA1Mzc4.X6TnNw.34L3T9QlIpyeMieofmV8LwZ2tek'
 command_prefix = '!bb '
 
 build_bot = Bot(command_prefix=command_prefix) ## Prod
