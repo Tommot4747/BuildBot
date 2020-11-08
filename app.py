@@ -1,6 +1,7 @@
 import os, sys
 sys.path.append(os.path.abspath('..'))
 import requests
+import discord
 from discord import Client
 from discord.ext.commands import Bot
 from config import discord_key, owners_ids ## Test
@@ -84,6 +85,19 @@ async def counter(ctx, *, champion):
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
 
+# @build_bot.command()
+# async def displayembed(ctx):
+#     embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
+#         # url = "https://www.google.com", #link to guide
+
+#     embed.set_image(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+#     embed.set_thumbnail(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+#     embed.set_author(name='blue'),
+#     embed.add_field(name='Primary Runes', value = 'field value, inline=False'),
+#     embed.add_field(name='Secondary Runes', value = 'field value, inline=True'),
+#     embed.add_field(name='Bonus Runes', value = 'field value, inline=True'),
+
+#     embed.set_author(name='John'),
+#     embed.set_footer(text='Link 1.\n Link 2.') # , icon_url = bot.user.avatar_url
 
 build_bot.run(discord_key)
-
