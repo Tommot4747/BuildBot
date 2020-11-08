@@ -22,10 +22,9 @@ BuildBot is a bot made with the intent to help League of Legends players enhance
 | :--- | :--- | --- |
 | **acronym** | !bb | Acronym for the bot, use before command. |
 | **build** | !bb build <championName> | Provides the best build for that champion as per our algorithm. |
-| **counters** | !bb counter <championName> | Provides best and worst picks against given <championName> |
-| **champstats** | !bb stats <championName> | Provides statistics about a given character for anyone who might require them. Helpful for last hitting and other detail-oriented aspects. |
-| **champinfo** | !bb info <championName> | Will return default tips for the character from the LOL API and Winrates, Banrates, and Picckrates. |
-| **helpme** | !bb helpme | Outputs command guidelines and documentation links. |
+| **counter** | !bb counter <championName> | Provides best and worst picks against given <championName> |
+| **stats** | !bb stats <championName> | Will return default tips for the character from the LOL API and Winrates, Banrates, and Pickrates.Will also provide statistics about a given character for anyone who might require them. Helpful for last hitting and other detail-oriented aspects. |
+| **info** | !bb info | Outputs command guidelines and documentation links. |
 
 ## Team members
 
