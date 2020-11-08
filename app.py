@@ -62,8 +62,9 @@ async def build(ctx, *, champion):
     clean_champ = str(champion).lower().replace(' ', '')
     if clean_champ in champ_list_lower:
         champ_name = champ_json['data'][champ_lookup[clean_champ]]['name']
-        mobi_build = mobi_build_lookup(mobi_champ_links_dict[champ_name])
-        await ctx.send(f"**Mobifire Build**: <{mobi_build}>")
+        mobi_build_one, mobi_build_two, mobi_build_three = mobi_build_lookup(mobi_champ_links_dict[champ_name])
+        await ctx.send(f"**Mobifire Builds** (in order of patch and upvotes)\n\
+        **1.**<{mobi_build_one}> \n **2.**<{mobi_build_two}> \n **3.**<{mobi_build_three}> ")
     else:
         suggestion_list = list(filter(lambda x: x[0].lower() == clean_champ[0], champ_list))
         suggestion = ', '.join(suggestion_list)
@@ -87,19 +88,21 @@ async def counter(ctx, *, champion):
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
 
-# @build_bot.command()
-# async def displayembed(ctx):
-#     embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
-#         # url = "https://www.google.com", #link to guide
+@build_bot.command()
+async def displayembed(ctx):
+    embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
+        # url = "https://www.google.com", #link to guide
 
-#     embed.set_image(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
-#     embed.set_thumbnail(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
-#     embed.set_author(name='blue'),
-#     embed.add_field(name='Primary Runes', value = 'field value, inline=False'),
-#     embed.add_field(name='Secondary Runes', value = 'field value, inline=True'),
-#     embed.add_field(name='Bonus Runes', value = 'field value, inline=True'),
+    embed.set_image(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+    embed.set_thumbnail(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+    embed.set_author(name='blue'),
+    embed.add_field(name='Primary Runes', value = 'field value, inline=False'),
+    embed.add_field(name='Secondary Runes', value = 'field value, inline=True'),
+    embed.add_field(name='Bonus Runes', value = 'field value, inline=True'),
 
-#     embed.set_author(name='John'),
-#     embed.set_footer(text='Link 1.\n Link 2.') # , icon_url = bot.user.avatar_url
+    embed.set_author(name='John'),
+    embed.set_footer(text='Link 1.\n Link 2.') # , icon_url = bot.user.avatar_url
+
+    await ctx.send(embed = embed)
 
 build_bot.run(discord_key)
