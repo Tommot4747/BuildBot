@@ -1,3 +1,5 @@
+#We should really add some comments to our code to give some flavor flave
+
 import os, sys
 sys.path.append(os.path.abspath('..'))
 import requests
