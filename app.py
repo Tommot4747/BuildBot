@@ -1,12 +1,14 @@
 import os, sys
 sys.path.append(os.path.abspath('..'))
 import requests
+import discord
 from discord import Client
 from discord.ext.commands import Bot
 # from config import discord_key, owners_ids ## Test
 from functions.functions import stat_table, mobi_champ_links, mobi_build_lookup
 
 discord_key = os.environ.get('discord_key') ## Prod
+discord_key = 'Nzc0MTUxOTgwMTU5MjA1Mzc4.X6TnNw.34L3T9QlIpyeMieofmV8LwZ2tek'
 command_prefix = '!bb '
 
 build_bot = Bot(command_prefix=command_prefix) ## Prod
@@ -70,6 +72,21 @@ async def build(ctx, *, champion):
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
 
+@build_bot.command()
+async def displayembed(ctx):
+    embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
+        # url = "https://www.google.com", #link to guide
 
+    embed.set_image(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+    embed.set_thumbnail(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+    embed.set_author(name='blue'),
+    embed.add_field(name='Primary Runes', value = 'field value, inline=False'),
+    embed.add_field(name='Secondary Runes', value = 'field value, inline=True'),
+    embed.add_field(name='Bonus Runes', value = 'field value, inline=True'),
+
+    embed.set_author(name='John'),
+    embed.set_footer(text='Link 1.\n Link 2.') # , icon_url = bot.user.avatar_url
+
+    await ctx.send(embed = embed)
 
 build_bot.run(discord_key)
