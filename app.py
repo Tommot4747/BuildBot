@@ -3,15 +3,15 @@ sys.path.append(os.path.abspath('..'))
 import requests
 from discord import Client
 from discord.ext.commands import Bot
-from config import discord_key, owners_ids ## Test
+# from config import discord_key, owners_ids ## Test
 from functions.functions import stat_table, mobi_champ_links, mobi_build_lookup
 
-# discord_key = os.environ.get('discord_key') ## Prod
+discord_key = os.environ.get('discord_key') ## Prod
 command_prefix = '!bb '
 
-# build_bot = Bot(command_prefix=command_prefix) ## Prod
-build_bot = Bot(command_prefix=command_prefix,
-                 owner_ids=list(owners_ids.values())) ## Test
+build_bot = Bot(command_prefix=command_prefix) ## Prod
+# build_bot = Bot(command_prefix=command_prefix,
+#                  owner_ids=list(owners_ids.values())) ## Test
 
 
 ## Connection to the Champion API
