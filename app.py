@@ -105,4 +105,15 @@ async def displayembed(ctx):
 
     await ctx.send(embed = embed)
 
+@build_bot.command(name='info')
+async def info(ctx):
+    embed = discord.Embed(title = "Buildbot - Guide", description = "BuildBot is a bot made with the intent to help League of Legends players enhance their ranked experience", color = 0x0C223E)
+    # embed.set_image(url='data\Build_Bot_White.png') ## waiting for git post
+    embed.add_field(name = 'Build Links', value = '\n "!bb build [champ]" Provides the best builds for that champion as per our algorithm.', inline=False),
+    embed.add_field(name = 'Build Links', value = '\n "!bb counter [champ]" Provides best and worst picks against given champion.', inline=False),
+    embed.add_field(name = 'Build Links', value = '\n "!bb stats [champ]" Provides statistics about a given character for anyone who might require them.', inline=False),
+    embed.set_footer(text='https://github.com/beaubatchelor/BuildBot')
+
+    await ctx.send(embed = embed)
+
 build_bot.run(discord_key)
