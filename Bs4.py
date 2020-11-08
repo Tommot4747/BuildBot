@@ -3,18 +3,23 @@ import requests
 import re
 from pprint import pprint as pp
 
-def mobi_champ_links():
-    url = 'https://www.mobafire.com'
-    html_doc = requests.get(f'{url}').text
+link = 'https://www.mobafire.com/league-of-legends/zac-guide'
+
+def mobi_stats_lookup(champ_link):
+    html_doc = requests.get(f'{champ_link}').text
     soup = BeautifulSoup(html_doc, 'html.parser')
-    footer_div = soup.find('div', class_ = 'footer-links')
-    footer_tags = footer_div.find_all('a', href=True)
-    champ_links = {}
-    for champ in footer_tags:
-        champ_key = champ.text
-        champ_value = url + champ['href']
-        champ_links[champ_key] = champ_value
-    return champ_links
+    rates = soup.find_all('div', class_ = re.compile('winbanpick__item'))
+    stats_dict = {}
+    for rate in rates:
+        if rate.find('span', class_ = 'label').text == 'WinRate':
+            stats_dict['win'] = rate.find('span', class_ = 'perc').text
+        elif rate.find('span', class_ = 'label').text == 'BanRate':
+            stats_dict['ban'] = rate.find('span', class_ = 'perc').text
+        elif rate.find('span', class_ = 'label').text == 'PickRate':
+            stats_dict['pick'] = rate.find('span', class_ = 'perc').text
+    return stats_dict
 
 
-pp(mobi_champ_links())
+
+pp(mobi_stats_lookup(link))
+# counter_champ_links()

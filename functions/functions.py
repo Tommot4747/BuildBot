@@ -44,11 +44,94 @@ def mobi_champ_links():
         champ_links[champ_key] = champ_value
     return champ_links
 
-
-
 def mobi_build_lookup(champ_link):
     html_doc = requests.get(f'{champ_link}?sort=patch&order=ascending&author=all&page=1').text
     soup = BeautifulSoup(html_doc, 'html.parser')
     a_tags = soup.find_all('a', class_ = re.compile('browse-list'))
     full_link = 'https://www.mobafire.com' + a_tags[0]['href']
     return full_link
+
+def counter_champ_links():
+    url = 'https://www.counterstats.net'
+    html_doc = requests.get(f'{url}').text
+    soup = BeautifulSoup(html_doc, 'html.parser')
+    champion_div = soup.find('div', id = 'champions')
+    champion_tags = champion_div.find_all('div', class_ = 'champion-icon champList')
+    champ_links = {}
+    for champ in champion_tags:
+        champ_key = str(champ.text).replace('\n', '')
+        counter_page = champ.find('a', href=True)
+        champ_value = url + counter_page['href']
+        champ_links[champ_key] = champ_value
+    return champ_links
+
+def counter_champ_lookup(champ_link):
+    html_doc = requests.get(f'{champ_link}').text
+    soup = BeautifulSoup(html_doc, 'html.parser')
+    all_picks_tags = soup.find_all('div', class_ = 'champ-box ALL')
+    counterers_dict = {'best' : [], 'worst' : []}
+    for box in all_picks_tags:
+        if box.find('em', class_ = 'green') != None:
+            counterers = box.find_all('a', class_ = re.compile('radial-progress'))
+            for counter in counterers:
+                counter_dict = {}
+
+                img_ele = counter.find('img')
+                img = img_ele['src']
+                name = img_ele['alt'].split('for ')[-1].strip()
+                percent = counter.find('span', class_ = 'percentage').text
+
+                counter_dict['name'] = name
+                counter_dict['img'] = img
+                counter_dict['percent'] = percent
+
+                counterers_dict['best'].append(counter_dict)
+
+        elif box.find('em', class_ = 'red') != None:
+            counterers = box.find_all('a', class_ = re.compile('radial-progress'))
+            for counter in counterers:
+                counter_dict = {}
+
+                img_ele = counter.find('img')
+                img = img_ele['src']
+                name = img_ele['alt'].split('for ')[-1].strip()
+                percent = counter.find('span', class_ = 'percentage').text
+
+                counter_dict['name'] = name
+                counter_dict['img'] = img
+                counter_dict['percent'] = percent
+
+                counterers_dict['worst'].append(counter_dict)
+    return counterers_dict
+
+def counter_message(champ_name, counter_champ_dict):
+    best_list = counter_champ_dict['best']
+    worst_list = counter_champ_dict['worst']
+    
+    message = f"*info from Counterstats.net*: \n**Best Against {champ_name}** \n **1.**{best_list[0]['name']} \
+        {best_list[0]['percent']}\n **2.**{best_list[1]['name']} {best_list[1]['percent']}\n **3.**{best_list[2]['name']} \
+        {best_list[2]['percent']}\n **Worst Against {champ_name}** \n **1.**{worst_list[0]['name']} {worst_list[0]['percent']}\n **2.**{worst_list[1]['name']} \
+        {worst_list[1]['percent']}\n **3.**{worst_list[2]['name']} {worst_list[2]['percent']}"
+    return message
+
+def stats_message(champ_name, champ_id, champ_detail_json, win_stats_dict):
+    ally = ', '.join(champ_detail_json['data'][champ_id]['allytips'])
+    enemy = ', '.join(champ_detail_json['data'][champ_id]['enemytips'])
+    
+    message = f"You have locked in {champ_name} \n **Ally Tips**: {ally} \n **Enemy Tips**: {enemy} \n\
+        **Win** {win_stats_dict['win']} \n **Ban** {win_stats_dict['ban']} \n **Pick** {win_stats_dict['pick']}"
+    return message
+
+def mobi_stats_lookup(champ_link):
+    html_doc = requests.get(f'{champ_link}').text
+    soup = BeautifulSoup(html_doc, 'html.parser')
+    rates = soup.find_all('div', class_ = re.compile('winbanpick__item'))
+    stats_dict = {}
+    for rate in rates:
+        if rate.find('span', class_ = 'label').text == 'WinRate':
+            stats_dict['win'] = rate.find('span', class_ = 'perc').text
+        elif rate.find('span', class_ = 'label').text == 'BanRate':
+            stats_dict['ban'] = rate.find('span', class_ = 'perc').text
+        elif rate.find('span', class_ = 'label').text == 'PickRate':
+            stats_dict['pick'] = rate.find('span', class_ = 'perc').text
+    return stats_dict
