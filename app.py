@@ -88,20 +88,31 @@ async def counter(ctx, *, champion):
         else:
             await ctx.send(f'We cannot find {champion}, Do you mean one of these? (character sensative) {suggestion}')
 
-@build_bot.command()
-async def displayembed(ctx):
-    embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
-        # url = "https://www.google.com", #link to guide
+# @build_bot.command()
+# async def displayembed(ctx):
+#     embed = discord.Embed(title = "Buildbot - {champion} Guide", description = "test", color = 0x0C223E)
+#         # url = "https://www.google.com", #link to guide
 
-    embed.set_image(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
-    embed.set_thumbnail(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
-    embed.set_author(name='blue'),
-    embed.add_field(name='Primary Runes', value = 'field value, inline=False'),
-    embed.add_field(name='Secondary Runes', value = 'field value, inline=True'),
-    embed.add_field(name='Bonus Runes', value = 'field value, inline=True'),
+#     embed.set_image(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+#     embed.set_thumbnail(url='https://media.discordapp.net/attachments/774455803137753128/774544353477656616/4lf322.png')
+#     embed.set_author(name='blue'),
+#     embed.add_field(name='Primary Runes', value = 'field value, inline=False'),
+#     embed.add_field(name='Secondary Runes', value = 'field value, inline=True'),
+#     embed.add_field(name='Bonus Runes', value = 'field value, inline=True'),
 
-    embed.set_author(name='John'),
-    embed.set_footer(text='Link 1.\n Link 2.') # , icon_url = bot.user.avatar_url
+#     embed.set_author(name='John'),
+#     embed.set_footer(text='Link 1.\n Link 2.') # , icon_url = bot.user.avatar_url
+
+#     await ctx.send(embed = embed)
+
+@build_bot.command(name='info')
+async def info(ctx):
+    embed = discord.Embed(title = "Buildbot - Guide", description = "BuildBot is a bot made with the intent to help League of Legends players enhance their ranked experience", color = 0x0C223E)
+    # embed.set_image(url='data\Build_Bot_White.png') ## waiting for git post
+    embed.add_field(name = 'Build Links', value = '\n "!bb build [champ]" Provides the best builds for that champion as per our algorithm.', inline=False),
+    embed.add_field(name = 'Build Links', value = '\n "!bb counter [champ]" Provides best and worst picks against given champion.', inline=False),
+    embed.add_field(name = 'Build Links', value = '\n "!bb stats [champ]" Provides statistics about a given character for anyone who might require them.', inline=False),
+    embed.set_footer(text='https://github.com/beaubatchelor/BuildBot')
 
     await ctx.send(embed = embed)
 
